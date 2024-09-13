@@ -105,6 +105,7 @@ export class Sidebar extends LitElement {
     (async () => {
       this.wallet = await chrome.runtime.sendMessage({
         type: 'get_wallet',
+        target: 'wallet',
       });
     })()
   }
@@ -112,6 +113,7 @@ export class Sidebar extends LitElement {
   private async onWalletChange(wallet: string) {
     chrome.runtime.sendMessage({
       type: 'set_wallet',
+      target: 'wallet',
       wallet,
     });
     this.wallet = JSON.parse(wallet);

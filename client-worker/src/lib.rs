@@ -221,9 +221,9 @@ impl Frontend {
     }
 }
 
-#[wasm_bindgen(start)]
-pub async fn main() {
-    std::panic::set_hook(Box::new(console_error_panic_hook::hook));
-    console_log::init_with_level(log::Level::Trace).unwrap();
-    linera_base::tracing::init();
-}
+// #[wasm_bindgen(start)]
+// pub async fn main() {
+//     std::panic::set_hook(Box::new(console_error_panic_hook::hook));
+//     console_log::init_with_level(log::Level::Trace).unwrap();
+//     linera_base::tracing::init();
+// }

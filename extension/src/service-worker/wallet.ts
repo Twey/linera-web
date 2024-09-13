@@ -3,10 +3,10 @@ import initWasm from './client/linera_web.js';
 
 import wasmModuleUrl from './client/linera_web_bg.wasm?url';
 import * as guard from './message.guard';
-import exampleWorkerUrl from './example-worker?worker&url';
+// import exampleWorkerUrl from './example-worker?worker&url';
 import RemoteWorker from '@/service-web-worker';
 
-(this as any).Worker = RemoteWorker;
+(globalThis as any).Worker = RemoteWorker;
 
 export class Server {
   private constructor(private client?: wasm.Client, private wallet?: string) { }
@@ -46,14 +46,14 @@ export class Server {
   }
 
   async init() {
-    const worker = new Worker(exampleWorkerUrl);
-    const messaged = new Promise(resolve => {
-      worker.onmessage = e => {
-        resolve(e);
-      };
-    });
-    worker.postMessage('hello');
-    console.log('resolved', await messaged);
+    // const worker = new Worker(exampleWorkerUrl);
+    // const messaged = new Promise(resolve => {
+    //   worker.onmessage = e => {
+    //     resolve(e);
+    //   };
+    // });
+    // worker.postMessage('hello');
+    // console.log('resolved', await messaged);
 
     await initWasm({
       module_or_path: (await fetch(wasmModuleUrl)).arrayBuffer(),
