@@ -12,9 +12,9 @@
       {
         devShells.default = pkgs.mkShell {
           inputsFrom = [
-            inputs'.linera-protocol.devShells.default
+            inputs'.linera-protocol.devShells.nightly
           ];
-          shellHook = inputs'.linera-protocol.devShells.default.shellHook;
+          shellHook = inputs'.linera-protocol.devShells.nightly.shellHook;
           nativeBuildInputs = [ pkgs.nodePackages.pnpm ];
         };
       };
