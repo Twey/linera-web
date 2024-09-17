@@ -15,7 +15,7 @@
             inputs'.linera-protocol.devShells.nightly
           ];
           shellHook = inputs'.linera-protocol.devShells.nightly.shellHook;
-          nativeBuildInputs = [ pkgs.nodePackages.pnpm ];
+          nativeBuildInputs = [ pkgs.nodePackages.pnpm pkgs.wasm-bindgen-cli pkgs.binaryen ];
         };
       };
   };
