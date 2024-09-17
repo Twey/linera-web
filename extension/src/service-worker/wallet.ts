@@ -1,5 +1,5 @@
 import * as wasm from './client/linera_web.js';
-import initWasm from './client/linera_web.js';
+import type { Client } from './client/linera_web.js';
 
 import wasmModuleUrl from './client/linera_web_bg.wasm?url';
 import * as guard from './message.guard';
@@ -9,11 +9,11 @@ import RemoteWorker from '@/service-web-worker';
 (globalThis as any).Worker = RemoteWorker;
 
 export class Server {
-  private constructor(private client?: wasm.Client, private wallet?: string) { }
+  private constructor(private client?: Client, private wallet?: string) { }
 
   async setWallet(wallet: string) {
     this.wallet = wallet;
-    this.client = await new wasm.Client(await wasm.Wallet.create(wallet));
+    this.client = await new (await wasm).Client(await (await wasm).Wallet.create(wallet));
   }
 
   async callClientFunction(sender: chrome.runtime.MessageSender, functionName: string, ...args: any): Promise<any> {
@@ -55,7 +55,7 @@ export class Server {
     // worker.postMessage('hello');
     // console.log('resolved', await messaged);
 
-    await initWasm({
+    await (await wasm).default({
       module_or_path: (await fetch(wasmModuleUrl)).arrayBuffer(),
     });
 

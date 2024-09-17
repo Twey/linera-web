@@ -3,7 +3,18 @@ import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  appType: 'mpa',
+  // esbuild: {
+  //   minifyIdentifiers: false,
+  //   keepNames: true,
+  // },
   build: {
+    // minify: 'terser',
+    // terserOptions: {
+    //   mangle: false,
+    //   keep_classnames: true,
+    //   keep_fnames: true,
+    // },
     sourcemap: true,
     assetsInlineLimit: 0,
     rollupOptions: {
@@ -15,9 +26,11 @@ export default defineConfig({
         'offscreen': resolve(__dirname, 'src/service-web-worker/offscreen/index.html'),
         'content-script': resolve(__dirname, 'src/content-script/index.ts'),
         'service-worker': resolve(__dirname, 'src/service-worker/index.ts'),
+        'wasm-shim': resolve(__dirname, 'src/service-worker/client/linera_web.js'),
       },
+      preserveEntrySignatures: 'strict',
       output: {
-        preserveModules: false,
+        minifyInternalExports: false,
         entryFileNames: '[name].js',
       }
     },
