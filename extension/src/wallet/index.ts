@@ -3,10 +3,6 @@ import type { Client } from './client/linera_web.js';
 
 import wasmModuleUrl from './client/linera_web_bg.wasm?url';
 import * as guard from './message.guard';
-// import exampleWorkerUrl from './example-worker?worker&url';
-import RemoteWorker from '@/service-web-worker';
-
-(globalThis as any).Worker = RemoteWorker;
 
 export class Server {
   private constructor(private client?: Client, private wallet?: string) { }

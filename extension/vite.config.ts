@@ -23,10 +23,11 @@ export default defineConfig({
         'welcome-popup': resolve(__dirname, 'src/popup/welcome.html'),
         'sidebar': resolve(__dirname, 'src/sidebar/index.html'),
         'options': resolve(__dirname, 'src/options/index.html'),
-        'offscreen': resolve(__dirname, 'src/service-web-worker/offscreen/index.html'),
+        'offscreen': resolve(__dirname, 'src/service-worker/offscreen/index.html'),
         'content-script': resolve(__dirname, 'src/content-script/index.ts'),
         'service-worker': resolve(__dirname, 'src/service-worker/index.ts'),
-        'wasm-shim': resolve(__dirname, 'src/service-worker/client/linera_web.js'),
+        // Hack: this forces a separate chunk for `linera_web.js`
+        'wasm-shim': resolve(__dirname, 'src/wallet/client/linera_web.js'),
       },
       preserveEntrySignatures: 'strict',
       output: {

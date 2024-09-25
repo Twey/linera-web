@@ -1,4 +1,4 @@
-import * as wallet from './wallet';
+import * as offscreen from './offscreen';
 
 chrome.sidePanel.setPanelBehavior({
   openPanelOnActionClick: true,
@@ -14,4 +14,4 @@ chrome.runtime.onInstalled.addListener(async () => {
   await chrome.action.openPopup({ windowId });
 });
 
-wallet.Server.run();
+offscreen.setup();
