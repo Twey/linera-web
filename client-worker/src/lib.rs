@@ -46,7 +46,7 @@ pub async fn get_storage() -> Result<WebStorage, <linera_views::memory::MemorySt
         linera_views::memory::MemoryStoreConfig::new(1),
         "linera",
         b"",
-        None,
+        Some(linera_execution::WasmRuntime::Wasmer),
     ).await
 }
 
@@ -60,7 +60,7 @@ pub const OPTIONS: ClientOptions = ClientOptions {
     send_timeout: std::time::Duration::from_millis(4000),
     recv_timeout: std::time::Duration::from_millis(4000),
     max_pending_message_bundles: 10,
-    wasm_runtime: None,
+    wasm_runtime: Some(linera_execution::WasmRuntime::Wasmer),
     max_concurrent_queries: None,
     max_stream_queries: 10,
     cache_size: 1000,

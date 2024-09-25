@@ -41,7 +41,7 @@ features = ["web"]
 [dependencies.linera-client]
 path = "../linera-protocol/linera-client"
 default-features = false
-features = ["web", "indexed-db"]
+features = ["web", "wasmer", "indexed-db"]
 
 [dependencies.linera-core]
 path = "../linera-protocol/linera-core"
@@ -57,7 +57,7 @@ features = ["web"]
 
 [dependencies.linera-storage]
 path = "../linera-protocol/linera-storage"
-features = ["web"]
+features = ["web", "wasmer"]
 
 [dependencies.linera-views]
 path = "../linera-protocol/linera-views"
