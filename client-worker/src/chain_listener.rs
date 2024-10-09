@@ -14,7 +14,7 @@ use linera_base::{
 use linera_chain::data_types::OutgoingMessage;
 use linera_core::{
     client::{ChainClient, ChainClientError},
-    node::{LocalValidatorNodeProvider, LocalValidatorNode, ValidatorNodeProvider},
+    node::{ValidatorNode, ValidatorNodeProvider},
     worker::Reason,
 };
 use linera_execution::{Message, SystemMessage};
@@ -35,7 +35,7 @@ where
 
 impl<P, S> ChainListener<P, S>
 where
-    P: LocalValidatorNodeProvider + Send + Sync + 'static,
+    P: ValidatorNodeProvider + Send + Sync + 'static,
     S: Storage + Clone + Send + Sync + 'static,
 {
     /// Creates a new chain listener given client chains.

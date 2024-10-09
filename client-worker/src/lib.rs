@@ -12,8 +12,8 @@ arguments to these functions cannot be trusted and _must_ be verified!
 use linera_core::{
     data_types::ClientOutcome,
     node::{
-        LocalValidatorNode as _,
-        LocalValidatorNodeProvider as _,
+        ValidatorNode as _,
+        ValidatorNodeProvider as _,
     },
 };
 
