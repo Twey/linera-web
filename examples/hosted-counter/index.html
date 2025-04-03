@@ -60,48 +60,50 @@
 
       const COUNTER_APP_ID = 'a2b93d1da68bc052f5b8650b5484103244ab9662c3a2e7112c71acc825f8f76e1073f4e0775a9212fff735f4fa30c228334a44d098e81a828839ef22f927f461ee44e4b2c6372d9d235c7beecaa08697cbb9d62685c409d70f3374b00d4abd7c00';
 
-      async function run() {
-          await linera.default();
+      await linera.default();
+
+      let client;
+      let wallet = await linera.Wallet.open();
+
+      if (wallet)
+          client = await new linera.Client(wallet);
+      else {
           const faucet = await new linera.Faucet('https://faucet.mini-net.linera.net');
-          const wallet = await faucet.createWallet();
-          const client = await new linera.Client(wallet);
-          document.getElementById('chain-id').innerText = await faucet.claimChain(client);
-          const counter = await client.frontend().application(COUNTER_APP_ID);
-          const logs = document.getElementById('logs');
-          const incrementButton = document.getElementById('increment-btn');
-          const blockTemplate = document.getElementById('block-template');
-
-          function addLogEntry(block) {
-              const entry = logs.getElementsByTagName('template')[0].content.cloneNode(true);
-              entry.querySelector('.height').textContent = block.height;
-              entry.querySelector('.hash').textContent = block.hash;
-              logs.insertBefore(entry, logs.firstChild);
-          }
-
-
-          async function updateCount() {
-              const response = await counter.query('{ "query": "query { value }" }');
-              document.getElementById('count').innerText
-                  = JSON.parse(response).data.value;
-          }
-
-          updateCount();
-          client.onNotification(notification => {
-              let newBlock = notification.reason.NewBlock;
-              if (!newBlock) return;
-              addLogEntry(newBlock);
-              updateCount();
-          });
-
-          incrementButton.addEventListener('click', () => {
-              counter.query('{ "query": "mutation { increment(value: 1) }" }');
-          });
+          wallet = await faucet.createWallet();
+          client = await new linera.Client(wallet);
+          await faucet.claimChain(client);
       }
 
-      if (document.readyState === 'loading')
-          document.addEventListener('DOMContentLoaded', run);
-      else
-          run();
+      document.getElementById('chain-id').innerText = client.chainId();
+      const counter = await client.frontend().application(COUNTER_APP_ID);
+      const logs = document.getElementById('logs');
+      const incrementButton = document.getElementById('increment-btn');
+      const blockTemplate = document.getElementById('block-template');
+
+      function addLogEntry(block) {
+          const entry = logs.getElementsByTagName('template')[0].content.cloneNode(true);
+          entry.querySelector('.height').textContent = block.height;
+          entry.querySelector('.hash').textContent = block.hash;
+          logs.insertBefore(entry, logs.firstChild);
+      }
+
+      async function updateCount() {
+          const response = await counter.query('{ "query": "query { value }" }');
+          document.getElementById('count').innerText
+              = JSON.parse(response).data.value;
+      }
+
+      updateCount();
+      client.onNotification(notification => {
+          let newBlock = notification.reason.NewBlock;
+          if (!newBlock) return;
+          addLogEntry(newBlock);
+          updateCount();
+      });
+
+      incrementButton.addEventListener('click', () => {
+          counter.query('{ "query": "mutation { increment(value: 1) }" }');
+      });
     </script>
   </body>
 </html>
